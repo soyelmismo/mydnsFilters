@@ -1,3 +1,4 @@
+# Some filters list blocks some required domains
 @@||assets.alicdn.com^$important
 @@||dns.listo.click^$important
 @@||s.youtube.com^$important
@@ -12,8 +13,6 @@
 @@||clarogratis.com^$important
 @@||pusher.com^$important
 @@||q.stripe.com^$important
-
-
 @@||vrbrnq.chkgdfcdh.com^$important
 @@||ijklmnop.khg2cfc3h.com^$important
 @@||kfustl.joeguttv.com^$important

@@ -1,3 +1,4 @@
+# This blocks a lot of domains that a bitcoin miner tries to communicate
 ||uota.xyz$ctag=device_tv
 ||instagram.com$ctag=device_tv
 ||live.com$ctag=device_tv
