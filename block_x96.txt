@@ -1,4 +1,4 @@
-# This blocks a lot of domains that a bitcoin miner tries to communicate
+# This blocks a lot of domains that a virus from cheap tv stick/box tries to communicate
 ||uota.xyz$ctag=device_tv
 ||rfb.ac$ctag=device_tv
 ||wynd.network$ctag=device_tv
@@ -30,4 +30,3 @@
 ||o2.pl$ctag=device_tv
 ||okamiboss.com$ctag=device_tv
 ||martianinc.co$ctag=device_tv
-

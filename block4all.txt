@@ -12,10 +12,10 @@
 ^mads\.
 ^pixels?[-.]
 ^stat(s|istics)?[0-9]*[_.-]
-||graph.whatsapp.com^$important
-||static.aternos.org^$important
-||wpad.listo.click^$important
-||rdvs.alljoyn.org^$important
+||graph.whatsapp.com
+||static.aternos.org
+||wpad.listo.click
+||rdvs.alljoyn.org
 ||weesunday.com
 ||ndhaliadg.com
 ||chde4fcv.com
@@ -29,3 +29,9 @@
 ||mdasf1ladh.com
 ||yjda1lddfs.com
 ||lgaiwmc1d.com
+||dk9wsvjuy.com
+||3rj3dvc2b.com
+||nhy74bgv.com
+||bhybff4c.com
+||hu73gddvd.com
+||myfe2c3fc.com

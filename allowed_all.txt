@@ -1,4 +1,4 @@
-# Some filters list blocks some required domains
+# Some list blocks some required domains
 @@||assets.alicdn.com^$important
 @@||dns.listo.click^$important
 @@||s.youtube.com^$important
