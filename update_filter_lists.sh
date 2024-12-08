@@ -87,3 +87,35 @@ rm -rf "$DOWNLOAD_DIR"
 
 # Finalizar
 echo "Deduplicación avanzada completada. Archivo optimizado disponible en $OUTPUT_FILE"
+
+
+if [ -f /app/unified.txt ]; then
+  # Clonar el repositorio si no existe
+  rm -rf /app/repo
+  git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git /app/repo
+
+  # Cambiar a la ubicación del repositorio
+  cd /app/repo
+
+  # Configurar el usuario y correo electrónico
+  git config --global user.name "$GIT_USER_NAME"
+  git config --global user.email "$GIT_USER_EMAIL"
+  git config --global credential.helper 'store --file ~/.git-credentials'
+  echo "https://${GIT_USER_NAME}:${GIT_TOKEN}@github.com" >> ~/.git-credentials
+
+  # Copiar el archivo /app/unified.txt al directorio del repositorio
+  cp /app/unified.txt /app/repo/unified.txt.new
+
+  # Comparar los dos archivos
+  if [ -f /app/repo/unified.txt ] && cmp /app/repo/unified.txt /app/repo/unified.txt.new; then
+    echo "No hay cambios en unified.txt, no se sube"
+  else
+    echo "Subiendo cambios al repositorio Git..."
+    # Renombrar el archivo antiguo y copiar el nuevo
+    mv /app/repo/unified.txt.new /app/repo/unified.txt
+    # Agregar el archivo y subir cambios
+    git add /app/repo/unified.txt
+    git commit -m "Actualización de listas de filtrado"
+    git push origin main
+  fi
+fi
