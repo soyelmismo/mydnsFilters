@@ -119,3 +119,5 @@ if [ -f /app/unified.txt ]; then
     git push origin main
   fi
 fi
+
+echo "Última ejecución: $(date)"
