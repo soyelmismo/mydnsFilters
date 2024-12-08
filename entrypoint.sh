@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Función para manejar errores
+handle_error() {
+  local lineno=$1
+  local msg=$2
+  echo "Error occurred at line $lineno: $msg"
+  # Puedes agregar aquí más lógica de manejo de errores si es necesario
+}
+
+# Configurar trap para manejar errores
+trap 'handle_error $LINENO "$BASH_COMMAND"' ERR
+
 chmod +x /app/*.sh
 # Configuración del cron según las variables de entorno
 CRON_MINUTES=${CRON_MINUTES:-*/2}
@@ -65,3 +76,6 @@ if [ -f /app/unified.txt ]; then
     git push origin main
   fi
 fi
+
+# Mantener el contenedor corriendo
+tail -f /dev/null
