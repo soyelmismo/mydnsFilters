@@ -1,0 +1,23 @@
+# Some list blocks some required domains
+@@||assets.alicdn.com^$important
+@@||dns.listo.click^$important
+@@||s.youtube.com^$important
+@@||graph.facebook.com^$important
+@@||graph.instagram.com^$important
+@@||wl.spotify.com^$important
+@@||adf.ly^$important
+@@||linkvertise.com^$important
+@@||iili.io^$important
+@@||web.facebook.com^$important
+@@||b-graph.facebook.com^$important
+@@||clarogratis.com^$important
+@@||pusher.com^$important
+@@||q.stripe.com^$important
+#
+@@||kfustl.joeguttv.com^$important
+@@||yzabcdef.3rj3dvc2b.com^$important
+@@||foxwzj.dk9wsvjuy.com^$important
+@@||mbee.oihsasd1ds.com^$important
+@@||zmupg.mdasf1ladh.com^$important
+@@||mds.yjda1lddfs.com^$important
+@@||vrbrnq.chkgdfcdh.com^$important
