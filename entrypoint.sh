@@ -45,7 +45,8 @@ fi
 
 # Actualiza las listas de filtrado
 echo "Actualizando listas de filtrado..."
-/app/update_filter_lists.sh
+cd /app
+./update_filter_lists.sh
 
 # Mantener el contenedor corriendo
 tail -f /dev/null

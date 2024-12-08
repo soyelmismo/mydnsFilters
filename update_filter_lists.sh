@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Archivo con URLs de blocklists
-URL_FILE="/app/blocklists.txt"
+URL_FILE="./blocklists.txt"
 
 # Verificar si el archivo existe
 if [[ ! -f "$URL_FILE" ]]; then
@@ -14,8 +14,8 @@ readarray -t BLOCKLIST_URLS < "$URL_FILE"
 
 
 # Directorios y archivos
-DOWNLOAD_DIR="/app/blocklists"
-OUTPUT_FILE="/app/unified.txt"
+DOWNLOAD_DIR="./blocklists"
+OUTPUT_FILE="./unified.txt"
 
 # Crear el directorio de descarga si no existe
 mkdir -p "$DOWNLOAD_DIR"
@@ -77,7 +77,7 @@ split -l $(echo "scale=0; $(wc -l < "$DOWNLOAD_DIR/all_entries_adblock.txt") / $
 
 # Ejecutar el script Python para procesar los fragmentos y deduplicar
 echo "Procesando fragmentos en paralelo con $THREADS hilos..."
-python3 /app/deduplicate.py "$DOWNLOAD_DIR/fragment_"* "$OUTPUT_FILE"
+python3 ./deduplicate.py "$DOWNLOAD_DIR/fragment_"* "$OUTPUT_FILE"
 
 # Comprobación de resultados
 grep -Eo '\|\|[a-z0-9.-]+\^' "$OUTPUT_FILE" | sort | uniq -d
@@ -89,13 +89,10 @@ rm -rf "$DOWNLOAD_DIR"
 echo "Deduplicación avanzada completada. Archivo optimizado disponible en $OUTPUT_FILE"
 
 
-if [ -f /app/unified.txt ]; then
+if [ -f ./unified.txt ]; then
   # Clonar el repositorio si no existe
-  rm -rf /app/repo
-  git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git /app/repo
-
-  # Cambiar a la ubicación del repositorio
-  cd /app/repo
+  rm -rf ./repo
+  git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git ./repo
 
   # Configurar el usuario y correo electrónico
   git config --global user.name "$GIT_USER_NAME"
@@ -103,18 +100,20 @@ if [ -f /app/unified.txt ]; then
   git config --global credential.helper 'store --file ~/.git-credentials'
   echo "https://${GIT_USER_NAME}:${GIT_TOKEN}@github.com" >> ~/.git-credentials
 
-  # Copiar el archivo /app/unified.txt al directorio del repositorio
-  cp /app/unified.txt /app/repo/unified.txt.new
+  # Copiar el archivo ./unified.txt al directorio del repositorio
+  cp ./unified.txt ./repo/unified.txt.new
+  # Cambiar a la ubicación del repositorio
+  cd ./repo
 
   # Comparar los dos archivos
-  if [ -f /app/repo/unified.txt ] && cmp /app/repo/unified.txt /app/repo/unified.txt.new; then
+  if [ -f ./unified.txt ] && cmp ./unified.txt ./unified.txt.new; then
     echo "No hay cambios en unified.txt, no se sube"
   else
     echo "Subiendo cambios al repositorio Git..."
     # Renombrar el archivo antiguo y copiar el nuevo
-    mv /app/repo/unified.txt.new /app/repo/unified.txt
+    mv ./unified.txt.new ./unified.txt
     # Agregar el archivo y subir cambios
-    git add /app/repo/unified.txt
+    git add ./unified.txt
     git commit -m "Actualización de listas de filtrado"
     git push origin main
   fi
