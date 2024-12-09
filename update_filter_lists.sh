@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Archivo con URLs de blocklists
-URL_FILE="./blocklists.txt"
+URL_FILE="blocklists.txt"
 
 # Verificar si el archivo existe
 if [[ ! -f "$URL_FILE" ]]; then
@@ -14,8 +14,8 @@ readarray -t BLOCKLIST_URLS < "$URL_FILE"
 
 
 # Directorios y archivos
-DOWNLOAD_DIR="./blocklists"
-OUTPUT_FILE="./unified.txt"
+DOWNLOAD_DIR="blocklists"
+OUTPUT_FILE="unified.txt"
 
 # Crear el directorio de descarga si no existe
 mkdir -p "$DOWNLOAD_DIR"
@@ -89,10 +89,16 @@ rm -rf "$DOWNLOAD_DIR"
 echo "Deduplicación avanzada completada. Archivo optimizado disponible en $OUTPUT_FILE"
 
 
-if [ -f ./unified.txt ]; then
+if [ -f unified.txt ]; then
   # Clonar el repositorio si no existe
-  rm -rf ./repo
-  git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git ./repo
+  if [ -d "./repo" ]; then
+    git -C ./repo fetch
+    git -C ./repo reset --hard origin/main
+    git -C ./repo pull
+  else
+    # Clonar el repositorio si no existe
+    git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git ./repo
+  fi
 
   # Configurar el usuario y correo electrónico
   git config --global user.name "$GIT_USER_NAME"
@@ -100,20 +106,20 @@ if [ -f ./unified.txt ]; then
   git config --global credential.helper 'store --file ~/.git-credentials'
   echo "https://${GIT_USER_NAME}:${GIT_TOKEN}@github.com" >> ~/.git-credentials
 
-  # Copiar el archivo ./unified.txt al directorio del repositorio
-  cp ./unified.txt ./repo/unified.txt.new
+  # Copiar el archivo unified.txt al directorio del repositorio
+  cp unified.txt ./repo/unified.txt.new
   # Cambiar a la ubicación del repositorio
   cd ./repo
 
   # Comparar los dos archivos
-  if [ -f ./unified.txt ] && cmp ./unified.txt ./unified.txt.new; then
+  if [ -f unified.txt ] && cmp unified.txt unified.txt.new; then
     echo "No hay cambios en unified.txt, no se sube"
   else
     echo "Subiendo cambios al repositorio Git..."
     # Renombrar el archivo antiguo y copiar el nuevo
-    mv ./unified.txt.new ./unified.txt
+    mv unified.txt.new unified.txt
     # Agregar el archivo y subir cambios
-    git add ./unified.txt
+    git add unified.txt
     git commit -m "Actualización de listas de filtrado"
     git push origin main
   fi
