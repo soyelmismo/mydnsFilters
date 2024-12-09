@@ -43,19 +43,6 @@ def load_rules(file_path):
             rules[line.replace("||", "").replace("^", "")] = line
     return rules
 
-def process_fragment(fragment):
-    """Procesa un fragmento del archivo para deduplicar reglas."""
-    rules = {}
-    with open(fragment, 'r') as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith("||") and line.endswith("^"):
-                domain = line[2:-1]  # Extraer dominio (sin || y ^)
-                # Verificar subdominios redundantes
-                if not any(domain.endswith(f".{d}") for d in rules):
-                    rules[domain] = line
-    return rules
-
 def main(input_files, output_file):
     """Procesa y deduplica reglas usando paralelización."""
     all_rules = {}
