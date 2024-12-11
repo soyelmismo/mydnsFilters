@@ -1,5 +1,6 @@
 #!/bin/bash
-
+echo "Actualizando listas de filtrado..."
+cd /app
 # Archivo con URLs de blocklists
 URL_FILE="blocklists.txt"
 

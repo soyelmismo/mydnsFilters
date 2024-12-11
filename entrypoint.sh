@@ -31,22 +31,14 @@ fi
 # Establecer tarea de cron
 crontab -r
 
-cron_job="$CRON_MINUTES $CRON_HOURS $CRON_DOM $CRON_MONTH $CRON_DOW /app/entrypoint.sh"
+cron_job="$CRON_MINUTES $CRON_HOURS $CRON_DOM $CRON_MONTH $CRON_DOW /app/update_filter_lists.sh"
 echo "$cron_job" | crontab -
 
-# Verificar si la tarea de cron se instaló correctamente
-if [ $? -eq 0 ]; then
-  echo "Cron job installed successfully:"
-  crontab -l
-else
-  echo "Failed to install cron job." >&2
-  exit 1
-fi
+# Iniciar el demonio de cron
+crond -f &
 
-# Actualiza las listas de filtrado
-echo "Actualizando listas de filtrado..."
-cd /app
-./update_filter_lists.sh
+# Ejecutar al iniciar contenedor
+/app/update_filter_lists.sh
 
 # Mantener el contenedor corriendo
 tail -f /dev/null
